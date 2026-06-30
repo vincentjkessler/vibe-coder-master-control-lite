@@ -1,0 +1,38 @@
+{
+  "name": "vibe-coder-master-control-lite",
+  "version": "1.0.0",
+  "description": "A T-key QA cockpit for vibe-coded web builds.",
+  "main": "qa-cockpit.js",
+  "files": [
+    "qa-cockpit.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node test/smoke.js"
+  },
+  "keywords": [
+    "qa",
+    "debug",
+    "overlay",
+    "vibe-coding",
+    "developer-tools",
+    "changelog",
+    "checklist",
+    "feature-flags",
+    "runtime"
+  ],
+  "author": "Vincent J. Kessler",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vincentjkessler/vibe-coder-master-control-lite.git"
+  },
+  "homepage": "https://vincentjkessler.com",
+  "bugs": {
+    "url": "https://github.com/vincentjkessler/vibe-coder-master-control-lite/issues"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}

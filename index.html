@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VCMC Lite - Stop Your AI From Quietly Breaking Things</title>
+<meta name="description" content="A QA cockpit you add to your project. Press T. See what broke. Fix it. Ship it.">
+<style>
+:root{--ink:#e8edf4;--muted:#78869a;--accent:#00ddff;--bg:#05080f;--surface:#0a0e18;--border:rgba(255,255,255,.08);--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--bg);color:var(--ink);font-family:var(--mono);line-height:1.6;overflow-x:hidden}
+a{color:inherit}.nav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:14px 28px;background:rgba(5,8,15,.94);border-bottom:1px solid var(--border);backdrop-filter:blur(12px);font-size:10px;letter-spacing:.18em}.brand{color:var(--accent)}.links{display:flex;gap:20px;align-items:center}.links a{text-decoration:none;color:var(--muted)}.links a:hover{color:var(--ink)}.nav-cta{border:1px solid rgba(0,221,255,.35);background:rgba(0,221,255,.1);color:var(--accent)!important;padding:6px 12px}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;position:relative}.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(0,221,255,.07),transparent 66%);pointer-events:none}.eyebrow{font-size:10px;letter-spacing:.34em;color:var(--accent);text-transform:uppercase;margin-bottom:22px}.title{font-size:clamp(50px,9vw,112px);line-height:.96;letter-spacing:.02em;color:#fff;margin-bottom:24px;max-width:850px;font-weight:900}.body{font-size:clamp(14px,1.8vw,18px);color:var(--muted);max-width:600px;margin-bottom:14px}.hint{font-size:clamp(16px,2.2vw,22px);color:rgba(255,255,255,.84);margin:10px 0 40px;font-weight:800}.actions{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}.btn{display:inline-block;text-decoration:none;font-size:11px;letter-spacing:.18em;padding:14px 26px;border:1px solid var(--border);transition:.15s}.primary{background:var(--accent);color:#05080f;border-color:var(--accent);font-weight:900}.primary:hover{background:#33e8ff;transform:translateY(-1px)}.ghost{color:var(--muted)}.ghost:hover{color:var(--ink);border-color:rgba(255,255,255,.3)}
+.badge{position:fixed;right:20px;bottom:20px;z-index:30;display:flex;gap:8px;align-items:center;padding:8px 14px;border:1px solid rgba(0,221,255,.28);background:rgba(0,221,255,.08);font-size:9px;letter-spacing:.16em;color:rgba(0,221,255,.7)}kbd{background:rgba(0,221,255,.18);border:1px solid rgba(0,221,255,.4);padding:1px 7px;color:var(--accent)}
+.band{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:68px 24px}.inner{max-width:860px;margin:0 auto}.label{font-size:9px;letter-spacing:.3em;color:var(--accent);text-transform:uppercase;margin-bottom:14px}.section-title{font-size:clamp(30px,5vw,56px);line-height:1.05;color:#fff;margin-bottom:14px}.section-body{font-size:14px;color:var(--muted);max-width:560px;line-height:1.75;margin-bottom:32px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}.card{background:#080d17;border:1px solid var(--border);padding:20px}.card h3{font-size:11px;letter-spacing:.18em;color:var(--accent);text-transform:uppercase;margin-bottom:10px}.card p{font-size:12px;color:rgba(255,255,255,.58);line-height:1.65}
+.install{display:grid;gap:18px}.step{display:flex;gap:18px;border-bottom:1px solid rgba(255,255,255,.06);padding-bottom:18px}.num{font-size:28px;color:rgba(0,221,255,.38);font-weight:900;width:34px;flex:0 0 auto}.step h3{font-size:12px;color:#fff;letter-spacing:.08em;margin-bottom:6px}.step p{font-size:12px;color:var(--muted)}.code{margin-top:8px;background:rgba(0,0,0,.5);border:1px solid rgba(0,221,255,.16);padding:10px 12px;color:rgba(210,235,245,.9);font-size:11px;overflow:auto}
+.quote{padding:72px 24px;text-align:center}.quote p{font-size:clamp(22px,3vw,34px);max-width:760px;margin:0 auto 14px;color:rgba(255,255,255,.82);line-height:1.35}.quote small{font-size:10px;color:var(--muted);letter-spacing:.12em}
+footer{padding:32px 24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:9px;letter-spacing:.12em;color:var(--muted)}footer a{text-decoration:none;color:var(--muted)}footer a:hover{color:var(--ink)}
+@media(max-width:650px){.nav{align-items:flex-start;gap:10px;flex-direction:column}.links{gap:12px;flex-wrap:wrap}.title{font-size:50px}.step{flex-direction:column}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">VCMC LITE</span>
+  <div class="links">
+    <a href="#how">HOW IT WORKS</a>
+    <a href="#tabs">TABS</a>
+    <a href="#install">INSTALL</a>
+    <a href="https://github.com/vincentjkessler/vibe-coder-master-control-lite" class="nav-cta">GITHUB</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="eyebrow">For people who build with AI</div>
+  <h1 class="title">Your AI says it's fixed.<br>Is it though?</h1>
+  <p class="body">You are building with Claude, ChatGPT, or another coding agent. Things break. The AI fixes them. Then something else breaks.</p>
+  <p class="hint">VCMC Lite is how you keep control inside the running build.</p>
+  <div class="actions">
+    <a class="btn primary" href="https://github.com/vincentjkessler/vibe-coder-master-control-lite">GET IT ON GITHUB</a>
+    <a class="btn ghost" href="#install">SEE INSTALL STEPS</a>
+  </div>
+</section>
+
+<div class="badge"><kbd>T</kbd> OPENS THE COCKPIT</div>
+
+<section class="band" id="how">
+  <div class="inner">
+    <div class="label">The thing nobody told you</div>
+    <h2 class="section-title">You can send your AI the exact bug report.</h2>
+    <p class="section-body">Press T. Open the cockpit. Copy the debug report. Your AI gets runtime errors, checklist state, changelog, version, and app state instead of a vague description.</p>
+    <div class="grid">
+      <div class="card"><h3>Catch errors</h3><p>Runtime errors are logged while you test the real app.</p></div>
+      <div class="card"><h3>Track changes</h3><p>The Changelog tab shows what moved in this build.</p></div>
+      <div class="card"><h3>Gate release</h3><p>Release Gate tells you if the build is ready or blocked.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="inner" id="tabs" style="padding:78px 24px">
+  <div class="label">9 tabs inside the cockpit</div>
+  <h2 class="section-title">Start with Import. End with Release Gate.</h2>
+  <p class="section-body">VCMC keeps the messy AI build loop visible: imported chat notes, checklist, build info, changelog, errors, navigation, flags, performance, and the final gate.</p>
+  <div class="grid">
+    <div class="card"><h3>Import</h3><p>Paste a chat and pull out fixes, bugs, and open items.</p></div>
+    <div class="card"><h3>Checklist</h3><p>Only mark items done after you test them yourself.</p></div>
+    <div class="card"><h3>Changelog</h3><p>Report what changed in this build. Critical for AI-coded work.</p></div>
+    <div class="card"><h3>Errors</h3><p>Catch what the browser throws while you test.</p></div>
+    <div class="card"><h3>Feature Flags</h3><p>Turn risky parts on and off.</p></div>
+    <div class="card"><h3>Release Gate</h3><p>One answer: ship or not yet.</p></div>
+  </div>
+</section>
+
+<section class="band" id="install">
+  <div class="inner">
+    <div class="label">Install</div>
+    <h2 class="section-title">One file. One script tag. Press T.</h2>
+    <div class="install">
+      <div class="step"><div class="num">1</div><div><h3>Copy the cockpit file</h3><p>Download `qa-cockpit.js` from GitHub and put it in your project folder.</p></div></div>
+      <div class="step"><div class="num">2</div><div><h3>Add it before `&lt;/body&gt;`</h3><div class="code">&lt;script src="qa-cockpit.js"&gt;&lt;/script&gt;</div></div></div>
+      <div class="step"><div class="num">3</div><div><h3>Initialize it</h3><div class="code">&lt;script&gt;<br>QACockpit.init({ project: 'My Project', version: '1.0.0', devMode: true });<br>&lt;/script&gt;</div></div></div>
+      <div class="step"><div class="num">4</div><div><h3>Open your build and press T</h3><p>The cockpit opens over your app. Press T again or Escape to close.</p></div></div>
+    </div>
+    <div class="actions" style="margin-top:30px;justify-content:flex-start">
+      <a class="btn primary" href="https://github.com/vincentjkessler/vibe-coder-master-control-lite">GET IT ON GITHUB</a>
+    </div>
+  </div>
+</section>
+
+<section class="quote">
+  <p>"Git tracks what changed. VCMC tracks whether the running product still matches the intent."</p>
+  <small>VINCENT J. KESSLER &bull; <a href="https://vincentjkessler.com">VINCENTJKESSLER.COM</a></small>
+</section>
+
+<footer>
+  <span>VCMC LITE &bull; MIT LICENSE &bull; <a href="https://vincentjkessler.com">VINCENTJKESSLER.COM</a></span>
+  <span><a href="https://github.com/vincentjkessler/vibe-coder-master-control-lite">GITHUB</a></span>
+</footer>
+</body>
+</html>
